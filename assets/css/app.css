@@ -1,1 +1,424 @@
-/* assets/css/app.css — da implementare nelle fasi successive */
+/* ========================================
+   APP.CSS — Stili App Principale
+   SetGo Workout App
+   ======================================== */
+
+/* ========================================
+   LAYOUT BASE APP
+   ======================================== */
+
+/** Altezza header fisso */
+:root {
+  --altezza-header: 56px;
+  --altezza-nav:    64px;
+}
+
+.app-contenitore {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 480px;
+  margin-inline: auto;
+  position: relative;
+}
+
+/* ========================================
+   HEADER FISSO
+   ======================================== */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: var(--altezza-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--spazio-4);
+  background: var(--colore-superficie);
+  border-bottom: 1px solid var(--colore-bordo);
+  z-index: 100;
+  transition: background var(--transizione), border-color var(--transizione);
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-2);
+}
+
+.header-logo-testo {
+  font-size: var(--testo-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--colore-testo);
+}
+
+/* ========================================
+   TOGGLE DARK MODE
+   ======================================== */
+.btn-toggle-tema {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raggio-full);
+  color: var(--colore-testo-attenuato);
+  transition: color var(--transizione), background var(--transizione);
+}
+
+.btn-toggle-tema:hover {
+  color: var(--colore-testo);
+  background: var(--colore-superficie-2);
+}
+
+.btn-toggle-tema:active {
+  background: var(--colore-superficie-offset);
+}
+
+.btn-toggle-tema svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   CONTENUTO PRINCIPALE SCROLLABILE
+   ======================================== */
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: var(--altezza-header);
+  padding-bottom: var(--altezza-nav);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ========================================
+   VISTE (sezioni)
+   ======================================== */
+.vista {
+  padding: var(--spazio-6) var(--spazio-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-5);
+  min-height: calc(100dvh - var(--altezza-header) - var(--altezza-nav));
+  animation: entrata 200ms ease-out;
+}
+
+.vista[hidden] {
+  display: none;
+}
+
+@keyframes entrata {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   VISTA PLACEHOLDER (fasi future)
+   ======================================== */
+.vista-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-4);
+  color: var(--colore-testo-tenue);
+  text-align: center;
+  padding: var(--spazio-16) var(--spazio-8);
+}
+
+.vista-placeholder svg {
+  width: 48px;
+  height: 48px;
+  stroke-width: 1.5;
+}
+
+.vista-placeholder p {
+  font-size: var(--testo-sm);
+  max-width: none;
+}
+
+/* ========================================
+   HOME — SALUTO
+   ======================================== */
+.home-saluto {
+  font-size: var(--testo-xl);
+  font-weight: 700;
+  color: var(--colore-testo);
+  line-height: 1.2;
+}
+
+/* ========================================
+   HOME — CARDS RIASSUNTIVE
+   ======================================== */
+.home-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spazio-3);
+}
+
+.card-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+  padding: var(--spazio-4);
+  background: var(--colore-superficie);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-xl);
+  box-shadow: var(--ombra-sm);
+  transition: box-shadow var(--transizione), transform var(--transizione);
+}
+
+.card-info:active {
+  transform: scale(0.98);
+}
+
+.card-info-icona {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raggio-lg);
+  background: var(--colore-primario-sfondo);
+  color: var(--colore-primario);
+  flex-shrink: 0;
+}
+
+.card-info-icona--fuoco {
+  background: #fef3c7;
+  color: #f59e0b;
+}
+
+[data-tema="scuro"] .card-info-icona--fuoco {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.card-info-icona svg {
+  width: 20px;
+  height: 20px;
+}
+
+.card-info-testo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-1);
+  min-width: 0;
+}
+
+.card-info-etichetta {
+  font-size: var(--testo-xs);
+  color: var(--colore-testo-attenuato);
+  white-space: nowrap;
+}
+
+.card-info-valore {
+  font-size: var(--testo-sm);
+  font-weight: 600;
+  color: var(--colore-testo);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========================================
+   HOME — CALENDARIO 7 GIORNI
+   ======================================== */
+.home-calendario {
+  background: var(--colore-superficie);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-xl);
+  padding: var(--spazio-4);
+  box-shadow: var(--ombra-sm);
+}
+
+.calendario-titolo {
+  font-size: var(--testo-xs);
+  font-weight: 600;
+  color: var(--colore-testo-attenuato);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spazio-3);
+  max-width: none;
+}
+
+.calendario-giorni {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spazio-1);
+}
+
+.calendario-giorno {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spazio-2);
+  flex: 1;
+}
+
+.giorno-nome {
+  font-size: var(--testo-xs);
+  color: var(--colore-testo-tenue);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.giorno-pallino {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--raggio-full);
+  background: var(--colore-superficie-offset);
+  transition: background var(--transizione), transform var(--transizione);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.giorno-pallino--attivo {
+  background: var(--colore-primario);
+}
+
+.giorno-pallino--oggi {
+  outline: 2px solid var(--colore-primario);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   HOME — PULSANTE INIZIA ALLENAMENTO
+   ======================================== */
+.btn-inizia-allenamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--spazio-4) var(--spazio-6);
+  background: var(--colore-primario);
+  color: var(--colore-testo-inverso);
+  border-radius: var(--raggio-xl);
+  font-size: var(--testo-base);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.35);
+  transition:
+    background var(--transizione),
+    transform var(--transizione),
+    box-shadow var(--transizione);
+  margin-top: var(--spazio-2);
+}
+
+.btn-inizia-allenamento:hover {
+  background: var(--colore-primario-hover);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.45);
+}
+
+.btn-inizia-allenamento:active {
+  background: var(--colore-primario-attivo);
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+}
+
+.btn-inizia-allenamento svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ========================================
+   NAVIGAZIONE BOTTOM
+   ======================================== */
+.nav-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: var(--altezza-nav);
+  display: flex;
+  align-items: stretch;
+  background: var(--colore-superficie);
+  border-top: 1px solid var(--colore-bordo);
+  z-index: 100;
+  transition: background var(--transizione), border-color var(--transizione);
+}
+
+.nav-voce {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-1);
+  min-width: 44px;
+  padding: var(--spazio-2) var(--spazio-1);
+  color: var(--colore-testo-tenue);
+  font-size: var(--testo-xs);
+  font-weight: 500;
+  border-radius: 0;
+  transition: color var(--transizione), background var(--transizione);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-voce svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.75;
+  transition: stroke-width var(--transizione);
+}
+
+.nav-voce:active {
+  background: var(--colore-superficie-2);
+}
+
+.nav-voce--attiva {
+  color: var(--colore-primario);
+}
+
+.nav-voce--attiva svg {
+  stroke-width: 2.25;
+}
+
+/* ========================================
+   SKELETON LOADERS
+   ======================================== */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--colore-superficie-offset) 25%,
+    var(--colore-superficie-2)      50%,
+    var(--colore-superficie-offset) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--raggio-sm);
+}
+
+.skeleton-testo {
+  height: 1em;
+  border-radius: var(--raggio-sm);
+}
+
+/* ========================================
+   RESPONSIVE — schermi grandi
+   ======================================== */
+@media (min-width: 480px) {
+  .app-header,
+  .nav-bottom {
+    left: 50%;
+    transform: translateX(-50%);
+    border-left:  1px solid var(--colore-bordo);
+    border-right: 1px solid var(--colore-bordo);
+  }
+}
