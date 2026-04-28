@@ -1,0 +1,185 @@
+/* ========================================
+   BASE.CSS — Reset, Design Tokens, Stili Base
+   SetGo Workout App
+   ======================================== */
+
+/* ========================================
+   DESIGN TOKENS — LIGHT MODE (default)
+   ======================================== */
+:root {
+  /* Accento primario — blu-verde energico */
+  --colore-primario:        #0ea5e9;
+  --colore-primario-hover:  #0284c7;
+  --colore-primario-attivo: #0369a1;
+  --colore-primario-sfondo: #e0f2fe;
+
+  /* Superfici */
+  --colore-sfondo:            #f8fafc;
+  --colore-superficie:        #ffffff;
+  --colore-superficie-2:      #f1f5f9;
+  --colore-superficie-offset: #e2e8f0;
+  --colore-bordo:             rgba(0, 0, 0, 0.08);
+  --colore-divisore:          #e2e8f0;
+
+  /* Testo */
+  --colore-testo:          #0f172a;
+  --colore-testo-attenuato:#64748b;
+  --colore-testo-tenue:    #94a3b8;
+  --colore-testo-inverso:  #ffffff;
+
+  /* Semantici */
+  --colore-successo:         #22c55e;
+  --colore-successo-sfondo:  #dcfce7;
+  --colore-attenzione:       #f59e0b;
+  --colore-attenzione-sfondo:#fef3c7;
+  --colore-errore:           #ef4444;
+  --colore-errore-sfondo:    #fee2e2;
+  --colore-record:           #f59e0b;
+
+  /* Spaziatura (base 4px) */
+  --spazio-1:  0.25rem;
+  --spazio-2:  0.5rem;
+  --spazio-3:  0.75rem;
+  --spazio-4:  1rem;
+  --spazio-5:  1.25rem;
+  --spazio-6:  1.5rem;
+  --spazio-8:  2rem;
+  --spazio-10: 2.5rem;
+  --spazio-12: 3rem;
+  --spazio-16: 4rem;
+
+  /* Tipografia fluida */
+  --font-body:   'Satoshi', 'Inter', sans-serif;
+  --testo-xs:    clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --testo-sm:    clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --testo-base:  clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --testo-lg:    clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --testo-xl:    clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+
+  /* Bordi arrotondati */
+  --raggio-sm:   0.375rem;
+  --raggio-md:   0.5rem;
+  --raggio-lg:   0.75rem;
+  --raggio-xl:   1rem;
+  --raggio-2xl:  1.5rem;
+  --raggio-full: 9999px;
+
+  /* Ombre */
+  --ombra-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --ombra-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --ombra-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
+
+  /* Transizioni */
+  --transizione: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ========================================
+   DESIGN TOKENS — DARK MODE
+   ======================================== */
+[data-tema="scuro"] {
+  --colore-sfondo:            #0f172a;
+  --colore-superficie:        #1e293b;
+  --colore-superficie-2:      #263348;
+  --colore-superficie-offset: #334155;
+  --colore-bordo:             rgba(255, 255, 255, 0.08);
+  --colore-divisore:          #1e293b;
+  --colore-testo:             #f1f5f9;
+  --colore-testo-attenuato:   #94a3b8;
+  --colore-testo-tenue:       #475569;
+  --ombra-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --ombra-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --ombra-lg: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================
+   RESET
+   ======================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--spazio-16);
+}
+
+body {
+  min-height: 100dvh;
+  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: var(--testo-base);
+  color: var(--colore-testo);
+  background-color: var(--colore-sfondo);
+  transition: background-color var(--transizione), color var(--transizione);
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+  line-height: 1.15;
+}
+
+p, li {
+  text-wrap: pretty;
+  max-width: 72ch;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* ========================================
+   UTILITÀ ACCESSIBILITÀ
+   ======================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--colore-primario);
+  outline-offset: 3px;
+  border-radius: var(--raggio-sm);
+}
+
+::selection {
+  background: rgba(14, 165, 233, 0.2);
+  color: var(--colore-testo);
+}
+
+/* ========================================
+   RIDUZIONE MOVIMENTO
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

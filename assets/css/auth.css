@@ -1,0 +1,274 @@
+/* ========================================
+   AUTH.CSS — Stili Pagina di Login
+   SetGo Workout App
+   ======================================== */
+
+/* ========================================
+   LAYOUT PAGINA
+   ======================================== */
+.pagina-auth {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spazio-6) var(--spazio-4);
+  gap: var(--spazio-6);
+}
+
+/* ========================================
+   HEADER — LOGO E TAGLINE
+   ======================================== */
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spazio-3);
+  text-align: center;
+}
+
+.logo-setgo {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+  color: var(--colore-testo);
+  text-decoration: none;
+}
+
+.logo-testo {
+  font-size: var(--testo-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--colore-testo);
+}
+
+.auth-tagline {
+  font-size: var(--testo-sm);
+  color: var(--colore-testo-attenuato);
+  font-weight: 400;
+}
+
+/* ========================================
+   CARD FORM LOGIN
+   ======================================== */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--colore-superficie);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-2xl);
+  padding: var(--spazio-8);
+  box-shadow: var(--ombra-md);
+}
+
+/* ========================================
+   FORM
+   ======================================== */
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-5);
+}
+
+.campo-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-2);
+}
+
+.etichetta-campo {
+  font-size: var(--testo-sm);
+  font-weight: 500;
+  color: var(--colore-testo);
+}
+
+/* ========================================
+   INPUT CON ICONA
+   ======================================== */
+.contenitore-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icona-input {
+  position: absolute;
+  left: var(--spazio-3);
+  width: 18px;
+  height: 18px;
+  color: var(--colore-testo-tenue);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.campo-input {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--spazio-3) var(--spazio-4) var(--spazio-3) calc(var(--spazio-3) + 18px + var(--spazio-2));
+  background: var(--colore-superficie-2);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-lg);
+  font-size: var(--testo-base);
+  color: var(--colore-testo);
+  transition:
+    border-color var(--transizione),
+    background var(--transizione),
+    box-shadow var(--transizione);
+}
+
+.campo-input::placeholder {
+  color: var(--colore-testo-tenue);
+}
+
+.campo-input:focus {
+  outline: none;
+  border-color: var(--colore-primario);
+  background: var(--colore-superficie);
+  box-shadow: 0 0 0 3px var(--colore-primario-sfondo);
+}
+
+/* Input password: padding destra per il pulsante occhio */
+#inputPassword {
+  padding-right: calc(var(--spazio-4) + 20px + var(--spazio-3));
+}
+
+/* ========================================
+   PULSANTE TOGGLE PASSWORD
+   ======================================== */
+.btn-toggle-password {
+  position: absolute;
+  right: var(--spazio-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--raggio-md);
+  color: var(--colore-testo-attenuato);
+  transition: color var(--transizione), background var(--transizione);
+}
+
+.btn-toggle-password:hover {
+  color: var(--colore-testo);
+  background: var(--colore-superficie-offset);
+}
+
+.btn-toggle-password svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ========================================
+   MESSAGGIO ERRORE INLINE
+   ======================================== */
+.messaggio-errore {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-2);
+  padding: var(--spazio-3) var(--spazio-4);
+  background: var(--colore-errore-sfondo);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--raggio-lg);
+  font-size: var(--testo-sm);
+  color: var(--colore-errore);
+  animation: comparsa 200ms ease-out;
+}
+
+.messaggio-errore[hidden] {
+  display: none;
+}
+
+.messaggio-errore svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+@keyframes comparsa {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   PULSANTE ACCEDI
+   ======================================== */
+.btn-primario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-2);
+  min-height: 48px;
+  padding: var(--spazio-3) var(--spazio-6);
+  background: var(--colore-primario);
+  color: var(--colore-testo-inverso);
+  border-radius: var(--raggio-lg);
+  font-size: var(--testo-base);
+  font-weight: 600;
+  transition:
+    background var(--transizione),
+    transform var(--transizione),
+    box-shadow var(--transizione);
+}
+
+.btn-primario:hover:not(:disabled) {
+  background: var(--colore-primario-hover);
+  box-shadow: var(--ombra-md);
+}
+
+.btn-primario:active:not(:disabled) {
+  background: var(--colore-primario-attivo);
+  transform: scale(0.98);
+}
+
+.btn-primario:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-accedi {
+  width: 100%;
+  margin-top: var(--spazio-2);
+}
+
+/* ========================================
+   SPINNER CARICAMENTO
+   ======================================== */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: rotazione 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+.spinner[hidden] {
+  display: none;
+}
+
+@keyframes rotazione {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   FOOTER AUTH
+   ======================================== */
+.auth-footer {
+  text-align: center;
+}
+
+.auth-footer p {
+  font-size: var(--testo-xs);
+  color: var(--colore-testo-tenue);
+  max-width: none;
+}
+
+/* ========================================
+   RESPONSIVE — schermi grandi
+   ======================================== */
+@media (min-width: 480px) {
+  .auth-card {
+    padding: var(--spazio-10);
+  }
+}

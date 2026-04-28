@@ -1,0 +1,10 @@
+# Chiavi Firebase — NON caricare mai su GitHub!
+assets/js/firebase-config.js
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

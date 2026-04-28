@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it" data-tema="chiaro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SetGo — Il tuo tracker di allenamento personale">
+  <title>SetGo — Accedi</title>
+
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+  <!-- ========================================
+       PAGINA LOGIN
+       ======================================== -->
+  <main class="pagina-auth" id="paginaAuth">
+
+    <!-- ========================================
+         HEADER — LOGO
+         ======================================== -->
+    <header class="auth-header">
+      <div class="logo-setgo" role="img" aria-label="SetGo">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true" focusable="false">
+          <rect x="5"  y="19" width="34" height="6" rx="3" fill="var(--colore-testo)"/>
+          <rect x="3"  y="14" width="9"  height="16" rx="2.5" fill="var(--colore-testo)"/>
+          <rect x="32" y="14" width="9"  height="16" rx="2.5" fill="var(--colore-testo)"/>
+          <rect x="0"  y="17" width="7"  height="10" rx="2" fill="var(--colore-primario)"/>
+          <rect x="37" y="17" width="7"  height="10" rx="2" fill="var(--colore-primario)"/>
+        </svg>
+        <span class="logo-testo">SetGo</span>
+      </div>
+      <p class="auth-tagline">Allenati. Monitora. Migliora.</p>
+    </header>
+
+    <!-- ========================================
+         FORM LOGIN
+         ======================================== -->
+    <section class="auth-card" aria-labelledby="titoloLogin">
+      <h1 id="titoloLogin" class="sr-only">Accedi a SetGo</h1>
+
+      <form id="formLogin" class="form-login" novalidate>
+
+        <div class="campo-form">
+          <label for="inputEmail" class="etichetta-campo">Email</label>
+          <div class="contenitore-input">
+            <i data-lucide="mail" class="icona-input" aria-hidden="true"></i>
+            <input
+              type="email"
+              id="inputEmail"
+              name="email"
+              class="campo-input"
+              placeholder="la-tua@email.com"
+              autocomplete="email"
+              inputmode="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="campo-form">
+          <label for="inputPassword" class="etichetta-campo">Password</label>
+          <div class="contenitore-input">
+            <i data-lucide="lock" class="icona-input" aria-hidden="true"></i>
+            <input
+              type="password"
+              id="inputPassword"
+              name="password"
+              class="campo-input"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            >
+            <button
+              type="button"
+              id="btnTogglePassword"
+              class="btn-toggle-password"
+              aria-label="Mostra password"
+            >
+              <i data-lucide="eye" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="messaggioErrore"
+          class="messaggio-errore"
+          role="alert"
+          aria-live="polite"
+          hidden
+        >
+          <i data-lucide="alert-circle" aria-hidden="true"></i>
+          <span id="testoErrore"></span>
+        </div>
+
+        <button type="submit" id="btnAccedi" class="btn-primario btn-accedi">
+          <span id="testoPulsante">Accedi</span>
+          <span id="spinnerPulsante" class="spinner" hidden aria-label="Caricamento in corso"></span>
+        </button>
+
+      </form>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+    <footer class="auth-footer">
+      <p>Accesso riservato ai membri. Contatta l'admin per registrarti.</p>
+    </footer>
+
+  </main>
+
+  <script type="module" src="assets/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+  </script>
+
+</body>
+</html>
