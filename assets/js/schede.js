@@ -87,7 +87,7 @@ function collegaEventListenerSchede() {
   // Ricerca esercizi (debounced)
   const inputRicerca = document.getElementById('inputRicercaEsercizio');
   if (inputRicerca) {
-    const cercaDebounced = creaDebounce(eseguiRicercaEsercizi);
+    const cercaDebounced = creaDebounce(eseguiRicercaEsercizi, 200);
     inputRicerca.addEventListener('input', (e) => cercaDebounced(e.target.value));
   }
 
@@ -577,11 +577,11 @@ function chiudiRicercaEsercizi() {
 }
 
 /**
- * @description Esegue la ricerca esercizi sull'API Wger e mostra i risultati.
+ * @description Cerca esercizi nel dataset locale e aggiorna i risultati nella UI.
+ *              La ricerca è sincrona — nessun loading indicator necessario.
  * @param {string} termine - Testo di ricerca
- * @returns {Promise<void>}
  */
-async function eseguiRicercaEsercizi(termine) {
+function eseguiRicercaEsercizi(termine) {
   const contenitore = document.getElementById('risultatiRicerca');
   if (!contenitore) return;
 
@@ -590,9 +590,7 @@ async function eseguiRicercaEsercizi(termine) {
     return;
   }
 
-  contenitore.innerHTML = '<div class="skeleton skeleton-testo" style="width:100%;height:48px"></div>'.repeat(3);
-
-  const risultati = await cercaEsercizi(termine);
+  const risultati = cercaEsercizi(termine);
 
   if (!risultati.length) {
     contenitore.innerHTML = `
