@@ -8,7 +8,7 @@
 import { ottieniSchede, salvaScheda, eliminaScheda, duplicaScheda,
          ottieniSchedePubbliche, salvaEsercizioPersonalizzato,
          ottieniEserciziPersonalizzati } from './db.js';
-import { cercaEsercizi, ottieniImmagineEsercizio, creaDebounce } from './esercizi.js';
+import { cercaEsercizi, creaDebounce } from './esercizi.js';
 
 // ========================================
 // COSTANTI
