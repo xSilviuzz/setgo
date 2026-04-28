@@ -422,3 +422,597 @@
     border-right: 1px solid var(--colore-bordo);
   }
 }
+
+
+/* ========================================
+   FASE 3 — SEZIONE SCHEDE
+   ======================================== */
+
+/* Override padding per sezione schede (usa pannelli interni) */
+.vista-schede {
+  padding: 0;
+  gap: 0;
+}
+
+/* ========================================
+   PANNELLI SCHEDE
+   ======================================== */
+.schede-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-4);
+  padding: var(--spazio-6) var(--spazio-4);
+  min-height: calc(100dvh - var(--altezza-header) - var(--altezza-nav));
+}
+
+.schede-panel[hidden] { display: none; }
+
+/* ========================================
+   TITOLI SEZIONE
+   ======================================== */
+.sezione-titolo {
+  font-size: var(--testo-lg);
+  font-weight: 700;
+  color: var(--colore-testo);
+}
+
+.sezione-titolo--sub {
+  font-size: var(--testo-sm);
+  font-weight: 600;
+  color: var(--colore-testo-attenuato);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.schede-lista-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.community-header {
+  padding-top: var(--spazio-2);
+  border-top: 1px solid var(--colore-divisore);
+}
+
+/* ========================================
+   PULSANTE NUOVA SCHEDA
+   ======================================== */
+.btn-nuova-scheda {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-1);
+  padding: var(--spazio-2) var(--spazio-3);
+  background: var(--colore-primario);
+  color: var(--colore-testo-inverso);
+  border-radius: var(--raggio-full);
+  font-size: var(--testo-sm);
+  font-weight: 600;
+  transition: background var(--transizione), transform var(--transizione);
+}
+
+.btn-nuova-scheda:hover  { background: var(--colore-primario-hover); }
+.btn-nuova-scheda:active { transform: scale(0.96); background: var(--colore-primario-attivo); }
+.btn-nuova-scheda svg    { width: 16px; height: 16px; }
+
+/* ========================================
+   LISTA SCHEDE
+   ======================================== */
+.lista-schede {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-3);
+}
+
+/* ========================================
+   CARD SCHEDA CON SWIPE
+   ======================================== */
+.scheda-card-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--raggio-xl);
+}
+
+/* Tray azioni (visibile dopo swipe) */
+.scheda-card-azioni {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  background: var(--colore-divisore);
+}
+
+.btn-azione {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  transition: background var(--transizione);
+}
+
+.btn-azione svg { width: 18px; height: 18px; color: var(--colore-testo-inverso); }
+.btn-azione--modifica { background: var(--colore-primario); }
+.btn-azione--modifica:hover { background: var(--colore-primario-hover); }
+.btn-azione--duplica  { background: var(--colore-attenzione); }
+.btn-azione--elimina  { background: var(--colore-errore); }
+.btn-azione--elimina:hover  { background: #dc2626; }
+
+/* Card scorrevole */
+.scheda-card-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+  padding: var(--spazio-4);
+  background: var(--colore-superficie);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-xl);
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow var(--transizione);
+  will-change: transform;
+  touch-action: pan-y;
+}
+
+.scheda-card-inner:active { box-shadow: var(--ombra-md); }
+
+.scheda-card-info   { flex: 1; display: flex; flex-direction: column; gap: var(--spazio-1); }
+.scheda-nome        { font-weight: 600; font-size: var(--testo-base); color: var(--colore-testo); }
+.scheda-meta        { font-size: var(--testo-xs); color: var(--colore-testo-attenuato); }
+.scheda-freccia     { width: 18px; height: 18px; color: var(--colore-testo-tenue); flex-shrink: 0; }
+
+/* Card community */
+.scheda-card--community .scheda-card-inner { cursor: default; }
+
+.badge-community {
+  font-size: var(--testo-xs);
+  font-weight: 600;
+  padding: var(--spazio-1) var(--spazio-2);
+  background: var(--colore-primario-sfondo);
+  color: var(--colore-primario);
+  border-radius: var(--raggio-full);
+  flex-shrink: 0;
+}
+
+/* Skeleton card */
+.scheda-card-skeleton { display: block; }
+
+/* ========================================
+   FORM SCHEDA
+   ======================================== */
+.form-scheda-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+}
+
+.btn-torna {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raggio-full);
+  color: var(--colore-testo);
+  transition: background var(--transizione);
+  flex-shrink: 0;
+}
+.btn-torna:hover { background: var(--colore-superficie-2); }
+.btn-torna svg   { width: 20px; height: 20px; }
+
+.form-scheda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-5);
+}
+
+.form-scheda-sezione {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-3);
+}
+
+/* Pulsante aggiungi esercizio */
+.btn-aggiungi-esercizio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-2);
+  width: 100%;
+  min-height: 48px;
+  border: 2px dashed var(--colore-bordo);
+  border-radius: var(--raggio-lg);
+  color: var(--colore-testo-attenuato);
+  font-size: var(--testo-sm);
+  font-weight: 500;
+  transition: border-color var(--transizione), color var(--transizione), background var(--transizione);
+}
+.btn-aggiungi-esercizio:hover {
+  border-color: var(--colore-primario);
+  color: var(--colore-primario);
+  background: var(--colore-primario-sfondo);
+}
+.btn-aggiungi-esercizio svg { width: 18px; height: 18px; }
+
+/* Durata stimata */
+.durata-stimata {
+  font-size: var(--testo-sm);
+  color: var(--colore-testo-attenuato);
+  text-align: center;
+  padding: var(--spazio-2) var(--spazio-4);
+  background: var(--colore-superficie-2);
+  border-radius: var(--raggio-full);
+}
+
+/* Toggle pubblica */
+.toggle-pubblica {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spazio-3);
+  padding: var(--spazio-4);
+  background: var(--colore-superficie);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-lg);
+  cursor: pointer;
+}
+
+.toggle-pubblica input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--colore-primario);
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.toggle-testo       { display: flex; flex-direction: column; gap: var(--spazio-1); }
+.toggle-testo strong { font-size: var(--testo-sm); font-weight: 600; }
+.toggle-testo small  { font-size: var(--testo-xs); color: var(--colore-testo-attenuato); }
+
+/* ========================================
+   CARD ESERCIZIO NEL FORM
+   ======================================== */
+.es-form-card {
+  background: var(--colore-superficie);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-xl);
+  padding: var(--spazio-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-3);
+}
+
+.es-form-top {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+}
+
+.es-gif {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--raggio-md);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--colore-superficie-offset);
+}
+
+.es-gif-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--raggio-md);
+  background: var(--colore-superficie-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--colore-testo-tenue);
+}
+.es-gif-placeholder svg { width: 24px; height: 24px; }
+
+.es-form-info   { flex: 1; display: flex; flex-direction: column; gap: var(--spazio-1); min-width: 0; }
+.es-nome        { font-weight: 600; font-size: var(--testo-sm); color: var(--colore-testo); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.es-muscolo     { font-size: var(--testo-xs); color: var(--colore-testo-attenuato); }
+
+.btn-rimuovi-es {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--raggio-md);
+  color: var(--colore-errore);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transizione);
+  flex-shrink: 0;
+}
+.btn-rimuovi-es:hover { background: var(--colore-errore-sfondo); }
+.btn-rimuovi-es svg   { width: 16px; height: 16px; }
+
+/* Campi numerici esercizio */
+.es-form-campi {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: var(--spazio-2);
+}
+
+.es-campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-1);
+}
+
+.es-campo label {
+  font-size: var(--testo-xs);
+  color: var(--colore-testo-attenuato);
+  font-weight: 500;
+}
+
+.input-es {
+  width: 100%;
+  min-height: 40px;
+  padding: var(--spazio-2);
+  background: var(--colore-superficie-2);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-md);
+  font-size: var(--testo-sm);
+  text-align: center;
+  transition: border-color var(--transizione);
+}
+.input-es:focus { outline: none; border-color: var(--colore-primario); }
+
+.es-form-extra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-2);
+}
+
+.toggle-superset {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-2);
+  font-size: var(--testo-xs);
+  color: var(--colore-testo-attenuato);
+  cursor: pointer;
+}
+.toggle-superset input { accent-color: var(--colore-primario); width: 16px; height: 16px; }
+
+.input-note {
+  width: 100%;
+  min-height: 36px;
+  padding: var(--spazio-2) var(--spazio-3);
+  background: var(--colore-superficie-2);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-md);
+  font-size: var(--testo-xs);
+  color: var(--colore-testo);
+  transition: border-color var(--transizione);
+}
+.input-note:focus { outline: none; border-color: var(--colore-primario); }
+
+.es-form-ordine {
+  display: flex;
+  gap: var(--spazio-2);
+  justify-content: flex-end;
+}
+
+.es-form-ordine button {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--raggio-md);
+  background: var(--colore-superficie-2);
+  border: 1px solid var(--colore-bordo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--colore-testo-attenuato);
+  transition: background var(--transizione), color var(--transizione);
+}
+.es-form-ordine button:disabled { opacity: 0.3; cursor: not-allowed; }
+.es-form-ordine button:not(:disabled):hover { background: var(--colore-superficie-offset); color: var(--colore-testo); }
+.es-form-ordine button svg { width: 16px; height: 16px; }
+
+/* ========================================
+   BOTTOM SHEET — RICERCA ESERCIZI
+   ======================================== */
+.overlay-app {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 200;
+  animation: fadeIn 180ms ease-out;
+}
+
+.overlay-app[hidden] { display: none; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  max-height: 85dvh;
+  background: var(--colore-superficie);
+  border-top-left-radius:  var(--raggio-2xl);
+  border-top-right-radius: var(--raggio-2xl);
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--ombra-lg);
+  animation: slideUp 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bottom-sheet[hidden] { display: none; }
+
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(100%); }
+  to   { transform: translateX(-50%) translateY(0); }
+}
+
+.bottom-sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--colore-superficie-offset);
+  border-radius: var(--raggio-full);
+  margin: var(--spazio-3) auto var(--spazio-1);
+  flex-shrink: 0;
+}
+
+.bottom-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spazio-2) var(--spazio-4) var(--spazio-4);
+  flex-shrink: 0;
+}
+
+.btn-chiudi-sheet {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raggio-full);
+  background: var(--colore-superficie-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--colore-testo-attenuato);
+  transition: background var(--transizione);
+}
+.btn-chiudi-sheet:hover { background: var(--colore-superficie-offset); }
+.btn-chiudi-sheet svg   { width: 16px; height: 16px; }
+
+.ricerca-input {
+  margin: 0 var(--spazio-4) var(--spazio-3);
+  flex-shrink: 0;
+}
+
+.risultati-ricerca {
+  overflow-y: auto;
+  flex: 1;
+  padding: 0 var(--spazio-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-2);
+  -webkit-overflow-scrolling: touch;
+}
+
+.risultato-ricerca {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+  width: 100%;
+  padding: var(--spazio-3);
+  background: var(--colore-superficie-2);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-lg);
+  text-align: left;
+  transition: background var(--transizione), box-shadow var(--transizione);
+}
+.risultato-ricerca:hover  { background: var(--colore-superficie-offset); }
+.risultato-ricerca:active { transform: scale(0.98); }
+.risultato-ricerca > svg  { width: 20px; height: 20px; color: var(--colore-primario); flex-shrink: 0; margin-left: auto; }
+
+.risultato-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raggio-md);
+  object-fit: cover;
+  background: var(--colore-superficie-offset);
+  flex-shrink: 0;
+}
+
+.risultato-thumb-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raggio-md);
+  background: var(--colore-superficie-offset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--colore-testo-tenue);
+}
+.risultato-thumb-placeholder svg { width: 20px; height: 20px; }
+
+.risultato-info  { flex: 1; display: flex; flex-direction: column; gap: var(--spazio-1); min-width: 0; }
+.risultato-nome  { font-weight: 600; font-size: var(--testo-sm); color: var(--colore-testo); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.risultato-muscolo { font-size: var(--testo-xs); color: var(--colore-testo-attenuato); }
+
+.bottom-sheet-footer {
+  padding: var(--spazio-4);
+  border-top: 1px solid var(--colore-divisore);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-3);
+}
+
+.btn-personalizzato {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-2);
+  width: 100%;
+  padding: var(--spazio-3);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-lg);
+  color: var(--colore-testo-attenuato);
+  font-size: var(--testo-sm);
+  transition: background var(--transizione), color var(--transizione);
+}
+.btn-personalizzato:hover { background: var(--colore-superficie-2); color: var(--colore-testo); }
+.btn-personalizzato svg   { width: 16px; height: 16px; }
+
+.form-personalizzato {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-3);
+}
+
+.form-personalizzato-azioni {
+  display: flex;
+  gap: var(--spazio-3);
+}
+
+.btn-secondario {
+  flex: 1;
+  min-height: 44px;
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio-lg);
+  font-size: var(--testo-sm);
+  font-weight: 500;
+  color: var(--colore-testo-attenuato);
+  transition: background var(--transizione);
+}
+.btn-secondario:hover { background: var(--colore-superficie-2); }
+
+.form-personalizzato .btn-primario { flex: 2; min-height: 44px; font-size: var(--testo-sm); }
+
+/* ========================================
+   STATO VUOTO
+   ======================================== */
+.stato-vuoto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spazio-10) var(--spazio-6);
+  color: var(--colore-testo-tenue);
+  gap: var(--spazio-3);
+}
+.stato-vuoto svg { width: 40px; height: 40px; stroke-width: 1.5; }
+.stato-vuoto p   { font-size: var(--testo-sm); max-width: none; }
+
+.stato-vuoto--piccolo { padding: var(--spazio-6); }
+
+/* Testo tenue generico */
+.testo-tenue {
+  font-size: var(--testo-xs);
+  color: var(--colore-testo-tenue);
+  text-align: center;
+  padding: var(--spazio-3);
+}

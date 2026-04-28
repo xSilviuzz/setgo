@@ -103,11 +103,76 @@
       </section>
 
       <!-- VISTA SCHEDE -->
-      <section id="vistaSchede" class="vista" aria-label="Le mie schede" hidden>
-        <div class="vista-placeholder">
-          <i data-lucide="clipboard-list" aria-hidden="true"></i>
-          <p>Le schede arrivano nella Fase 3 💪</p>
+      <section id="vistaSchede" class="vista vista-schede" aria-label="Le mie schede" hidden>
+
+        <!-- ========================================
+             PANEL: LISTA SCHEDE
+             ======================================== -->
+        <div id="schedePanelLista" class="schede-panel">
+
+          <div class="schede-lista-header">
+            <h2 class="sezione-titolo">Le mie schede</h2>
+            <button id="btnNuovaScheda" class="btn-nuova-scheda" aria-label="Crea nuova scheda">
+              <i data-lucide="plus" aria-hidden="true"></i>
+              <span>Nuova</span>
+            </button>
+          </div>
+
+          <div id="listaSchedePersonali" class="lista-schede" aria-label="Le tue schede"></div>
+
+          <div class="community-header">
+            <h3 class="sezione-titolo sezione-titolo--sub">Community</h3>
+          </div>
+          <div id="listaSchedeCommunity" class="lista-schede" aria-label="Schede della community"></div>
+
         </div>
+
+        <!-- ========================================
+             PANEL: FORM SCHEDA (crea / modifica)
+             ======================================== -->
+        <div id="schedePanelForm" class="schede-panel" hidden>
+
+          <div class="form-scheda-header">
+            <button id="btnTornaListaSchede" class="btn-torna" aria-label="Torna alla lista schede">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+            </button>
+            <h2 id="titoloFormScheda" class="sezione-titolo">Nuova Scheda</h2>
+          </div>
+
+          <form id="formScheda" class="form-scheda" novalidate>
+
+            <div class="campo-form">
+              <label for="inputNomeScheda" class="etichetta-campo">Nome scheda</label>
+              <input type="text" id="inputNomeScheda" class="campo-input"
+                     placeholder="Es. Push Day, Full Body..." required>
+            </div>
+
+            <div class="form-scheda-sezione">
+              <p class="etichetta-campo">Esercizi</p>
+              <div id="listaEserciziScheda"></div>
+              <button type="button" id="btnAggiungiEsercizio" class="btn-aggiungi-esercizio">
+                <i data-lucide="plus-circle" aria-hidden="true"></i>
+                Aggiungi Esercizio
+              </button>
+            </div>
+
+            <div id="durataStimata" class="durata-stimata">Durata stimata: —</div>
+
+            <label class="toggle-pubblica">
+              <input type="checkbox" id="checkSchedaPubblica">
+              <span class="toggle-testo">
+                <strong>Scheda pubblica</strong>
+                <small>Visibile agli altri utenti nella sezione Community</small>
+              </span>
+            </label>
+
+            <button type="submit" id="btnSalvaScheda" class="btn-primario">
+              Salva Scheda
+            </button>
+
+          </form>
+        </div>
+
       </section>
 
       <!-- VISTA PROGRESSI -->
@@ -168,6 +233,58 @@
     </nav>
 
   </div><!-- fine appContenitore -->
+
+
+  <!-- ========================================
+       OVERLAY — sfondo scuro per bottom sheet
+       ======================================== -->
+  <div id="overlayApp" class="overlay-app" hidden aria-hidden="true"></div>
+
+  <!-- ========================================
+       BOTTOM SHEET — RICERCA ESERCIZI
+       ======================================== -->
+  <div id="ricercaEserciziSheet" class="bottom-sheet" hidden
+       role="dialog" aria-modal="true" aria-labelledby="titoloRicercaEsercizi">
+
+    <div class="bottom-sheet-handle" aria-hidden="true"></div>
+
+    <div class="bottom-sheet-header">
+      <h3 id="titoloRicercaEsercizi" class="sezione-titolo">Aggiungi Esercizio</h3>
+      <button id="btnChiudiRicerca" class="btn-chiudi-sheet" aria-label="Chiudi ricerca esercizi">
+        <i data-lucide="x" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="contenitore-input ricerca-input">
+      <i data-lucide="search" class="icona-input" aria-hidden="true"></i>
+      <input type="search" id="inputRicercaEsercizio" class="campo-input"
+             placeholder="Cerca esercizio (in inglese)..." autocomplete="off">
+    </div>
+
+    <div id="risultatiRicerca" class="risultati-ricerca" role="list" aria-live="polite"></div>
+
+    <div class="bottom-sheet-footer">
+      <button type="button" id="btnEsercizioPersonalizzato" class="btn-personalizzato">
+        <i data-lucide="plus" aria-hidden="true"></i>
+        Aggiungi esercizio personalizzato
+      </button>
+
+      <!-- Form esercizio personalizzato (nascosto di default) -->
+      <form id="formEsercizioPersonalizzato" class="form-personalizzato" hidden novalidate>
+        <input type="text" id="inputNomePersonalizzato" class="campo-input"
+               placeholder="Nome esercizio" required>
+        <input type="text" id="inputMuscoloPersonalizzato" class="campo-input"
+               placeholder="Gruppo muscolare (es. Petto)">
+        <input type="url" id="inputGifPersonalizzato" class="campo-input"
+               placeholder="URL immagine/GIF (opzionale)">
+        <div class="form-personalizzato-azioni">
+          <button type="button" id="btnAnnullaPersonalizzato" class="btn-secondario">Annulla</button>
+          <button type="submit" class="btn-primario">Aggiungi</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
 
   <script type="module" src="assets/js/app.js"></script>
   <script>document.addEventListener("DOMContentLoaded", () => lucide.createIcons());</script>

@@ -4,7 +4,8 @@
  * @module app
  */
 
-import { auth, db } from './firebase-config.js';
+import { auth, db }          from './firebase-config.js';
+import { inizializzaSchede } from './schede.js';
 import { onAuthStateChanged }    from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 import { signOut }               from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 import {
@@ -82,6 +83,9 @@ function inizializzaRouter() {
  *              Aggiorna lo stato attivo nella navigazione bottom.
  * @param {string} nomeVista - Nome della vista: 'Home' | 'Schede' | 'Progressi' | 'Profilo'
  */
+/** @type {Set<string>} Viste già inizializzate */
+const visteInizializzate = new Set();
+
 function navigaA(nomeVista) {
   if (nomeVista === vistaAttiva) return;
   vistaAttiva = nomeVista;
@@ -101,6 +105,12 @@ function navigaA(nomeVista) {
     voce.classList.toggle('nav-voce--attiva', attiva);
     voce.setAttribute('aria-current', attiva ? 'page' : 'false');
   });
+
+  // Inizializza moduli al primo accesso
+  if (!visteInizializzate.has(nomeVista) && utenteCorrente) {
+    visteInizializzate.add(nomeVista);
+    if (nomeVista === 'Schede') inizializzaSchede(utenteCorrente.uid);
+  }
 }
 
 // ========================================
