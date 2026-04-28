@@ -405,6 +405,12 @@ function creaHtmlEsercizioForm(esercizio, idx) {
         <div class="es-form-info">
           <span class="es-nome">${esercizio.nome}</span>
           <span class="es-muscolo">${esercizio.gruppoMuscolare || '—'}</span>
+          <a href="https://www.youtube.com/results?search_query=${encodeURIComponent('how to ' + esercizio.nome + ' exercise')}"
+             target="_blank" rel="noopener noreferrer"
+             class="btn-youtube-tutorial" aria-label="Tutorial YouTube: ${esercizio.nome}">
+            <i data-lucide="youtube" aria-hidden="true"></i>
+            Tutorial
+          </a>
         </div>
         <button type="button" class="btn-rimuovi-es" data-azione="rimuovi" aria-label="Rimuovi ${esercizio.nome}">
           <i data-lucide="x" aria-hidden="true"></i>
@@ -602,9 +608,9 @@ function eseguiRicercaEsercizi(termine) {
 
   contenitore.innerHTML = risultati.map(r => `
     <button type="button" class="risultato-ricerca" data-id="${r.id}" data-nome="${r.nome}" data-muscolo="${r.gruppoMuscolare}" data-gif="${r.gifUrl || ''}">
-      ${r.gifUrl
-        ? `<img src="${r.gifUrl}" alt="${r.nome}" class="risultato-thumb" width="40" height="40" loading="lazy">`
-        : `<div class="risultato-thumb-placeholder"><i data-lucide="dumbbell" aria-hidden="true"></i></div>`}
+      <div class="risultato-thumb-cat risultato-cat--${(r.gruppoMuscolare||'').toLowerCase().replace(/\s+/g,'-')}">
+        <span>${r.gruppoMuscolare ? r.gruppoMuscolare.charAt(0) : '?'}</span>
+      </div>
       <div class="risultato-info">
         <span class="risultato-nome">${r.nome}</span>
         <span class="risultato-muscolo">${r.gruppoMuscolare}</span>

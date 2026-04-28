@@ -1016,3 +1016,272 @@
   text-align: center;
   padding: var(--spazio-3);
 }
+
+
+/* ========================================
+   PATCH — INPUT FIELDS RESTYLING
+   ======================================== */
+
+/* Reset base tutti i campi input/search nell'app */
+.campo-input,
+.input-es,
+.input-note {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Campo input principale — ridisegnato */
+.campo-input {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: var(--spazio-3) var(--spazio-4);
+  background: var(--colore-superficie-2);
+  border: 1.5px solid var(--colore-bordo);
+  border-radius: var(--raggio-lg);
+  font-size: var(--testo-sm);
+  font-family: var(--fonte-corpo);
+  color: var(--colore-testo);
+  line-height: 1.4;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+  outline: none;
+}
+
+.campo-input::placeholder {
+  color: var(--colore-testo-tenue);
+  font-size: var(--testo-sm);
+}
+
+.campo-input:hover {
+  border-color: var(--colore-testo-attenuato);
+}
+
+.campo-input:focus {
+  border-color: var(--colore-primario);
+  background: var(--colore-superficie);
+  box-shadow: 0 0 0 3px oklch(from var(--colore-primario) l c h / 0.12);
+}
+
+/* Input ricerca con icona */
+.contenitore-input {
+  position: relative;
+}
+
+.contenitore-input .icona-input {
+  position: absolute;
+  left: var(--spazio-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--colore-testo-tenue);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.contenitore-input .campo-input {
+  padding-left: calc(var(--spazio-3) + 18px + var(--spazio-2));
+}
+
+/* Rimozione icona X nativa su input[type=search] */
+input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+
+/* Label sopra il campo */
+.etichetta-campo {
+  display: block;
+  font-size: var(--testo-xs);
+  font-weight: 600;
+  color: var(--colore-testo-attenuato);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--spazio-2);
+}
+
+/* ========================================
+   PATCH — INPUT CAMPI ESERCIZIO (griglia 2x2 mobile-first)
+   ======================================== */
+
+/* Override: griglia 2×2 al posto di 4 colonne in fila */
+.es-form-campi {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spazio-2);
+}
+
+@media (min-width: 480px) {
+  .es-form-campi { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Input numerico esercizio — ridisegnato */
+.input-es {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--spazio-2) var(--spazio-2);
+  background: var(--colore-superficie-2);
+  border: 1.5px solid var(--colore-bordo);
+  border-radius: var(--raggio-md);
+  font-size: var(--testo-sm);
+  font-family: var(--fonte-corpo);
+  color: var(--colore-testo);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.input-es::-webkit-outer-spin-button,
+.input-es::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.input-es:focus {
+  border-color: var(--colore-primario);
+  box-shadow: 0 0 0 3px oklch(from var(--colore-primario) l c h / 0.1);
+}
+
+/* Label campo esercizio */
+.es-campo label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--colore-testo-tenue);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: var(--spazio-1);
+}
+
+/* Input note */
+.input-note {
+  width: 100%;
+  min-height: 40px;
+  padding: var(--spazio-2) var(--spazio-3);
+  background: var(--colore-superficie-2);
+  border: 1.5px solid var(--colore-bordo);
+  border-radius: var(--raggio-md);
+  font-size: var(--testo-xs);
+  font-family: var(--fonte-corpo);
+  color: var(--colore-testo);
+  transition: border-color 180ms ease;
+  outline: none;
+}
+
+.input-note:focus {
+  border-color: var(--colore-primario);
+  box-shadow: 0 0 0 3px oklch(from var(--colore-primario) l c h / 0.1);
+}
+
+/* Form esercizio personalizzato */
+.form-personalizzato .campo-input { min-height: 44px; }
+
+/* ========================================
+   PATCH — BOTTONE YOUTUBE TUTORIAL
+   ======================================== */
+
+.btn-youtube-tutorial {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spazio-1);
+  margin-top: var(--spazio-1);
+  padding: 3px var(--spazio-2);
+  background: #ff0000;
+  color: #ffffff;
+  border-radius: var(--raggio-full);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  width: fit-content;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.btn-youtube-tutorial:hover  { background: #cc0000; }
+.btn-youtube-tutorial:active { transform: scale(0.95); }
+.btn-youtube-tutorial svg    { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ========================================
+   PATCH — ICONE CATEGORIA ESERCIZIO (form card)
+   ======================================== */
+
+.es-cat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--raggio-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.es-cat-icon svg { width: 22px; height: 22px; }
+
+/* Colori per categoria */
+.es-cat-icon--chest      { background: #fee2e2; color: #dc2626; }
+.es-cat-icon--back       { background: #dbeafe; color: #2563eb; }
+.es-cat-icon--arms       { background: #fef3c7; color: #d97706; }
+.es-cat-icon--legs       { background: #d1fae5; color: #059669; }
+.es-cat-icon--shoulders  { background: #ede9fe; color: #7c3aed; }
+.es-cat-icon--abs        { background: #ffedd5; color: #ea580c; }
+.es-cat-icon--calves     { background: #cffafe; color: #0891b2; }
+.es-cat-icon--cardio     { background: #fce7f3; color: #db2777; }
+.es-cat-icon--upper-arms { background: #fef3c7; color: #d97706; }
+.es-cat-icon--lower-arms { background: #fef3c7; color: #b45309; }
+.es-cat-icon--upper-legs { background: #d1fae5; color: #059669; }
+.es-cat-icon--lower-legs { background: #cffafe; color: #0891b2; }
+.es-cat-icon--waist      { background: #ffedd5; color: #ea580c; }
+
+/* Dark mode categorie */
+[data-tema="scuro"] .es-cat-icon--chest     { background: #450a0a; color: #fca5a5; }
+[data-tema="scuro"] .es-cat-icon--back      { background: #1e3a5f; color: #93c5fd; }
+[data-tema="scuro"] .es-cat-icon--arms      { background: #451a03; color: #fcd34d; }
+[data-tema="scuro"] .es-cat-icon--legs      { background: #064e3b; color: #6ee7b7; }
+[data-tema="scuro"] .es-cat-icon--shoulders { background: #2e1065; color: #c4b5fd; }
+[data-tema="scuro"] .es-cat-icon--abs       { background: #431407; color: #fdba74; }
+[data-tema="scuro"] .es-cat-icon--calves    { background: #164e63; color: #67e8f9; }
+[data-tema="scuro"] .es-cat-icon--cardio    { background: #500724; color: #f9a8d4; }
+
+/* ========================================
+   PATCH — BADGE CATEGORIA NELLA RICERCA
+   ======================================== */
+
+.risultato-thumb-cat {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raggio-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* Riusa colori categorie */
+.risultato-cat--chest      { background: #fee2e2; color: #dc2626; }
+.risultato-cat--back       { background: #dbeafe; color: #2563eb; }
+.risultato-cat--arms,
+.risultato-cat--upper-arms,
+.risultato-cat--lower-arms { background: #fef3c7; color: #d97706; }
+.risultato-cat--legs,
+.risultato-cat--upper-legs,
+.risultato-cat--lower-legs { background: #d1fae5; color: #059669; }
+.risultato-cat--shoulders  { background: #ede9fe; color: #7c3aed; }
+.risultato-cat--abs,
+.risultato-cat--waist      { background: #ffedd5; color: #ea580c; }
+.risultato-cat--calves     { background: #cffafe; color: #0891b2; }
+.risultato-cat--cardio     { background: #fce7f3; color: #db2777; }
+.risultato-cat--            { background: var(--colore-superficie-offset); color: var(--colore-testo-tenue); }
+
+[data-tema="scuro"] .risultato-cat--chest     { background: #450a0a; color: #fca5a5; }
+[data-tema="scuro"] .risultato-cat--back      { background: #1e3a5f; color: #93c5fd; }
+[data-tema="scuro"] .risultato-cat--arms,
+[data-tema="scuro"] .risultato-cat--upper-arms{ background: #451a03; color: #fcd34d; }
+[data-tema="scuro"] .risultato-cat--legs,
+[data-tema="scuro"] .risultato-cat--upper-legs{ background: #064e3b; color: #6ee7b7; }
+[data-tema="scuro"] .risultato-cat--shoulders { background: #2e1065; color: #c4b5fd; }
+[data-tema="scuro"] .risultato-cat--abs,
+[data-tema="scuro"] .risultato-cat--waist     { background: #431407; color: #fdba74; }
+[data-tema="scuro"] .risultato-cat--calves    { background: #164e63; color: #67e8f9; }
+[data-tema="scuro"] .risultato-cat--cardio    { background: #500724; color: #f9a8d4; }
