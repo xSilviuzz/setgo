@@ -1,7 +1,8 @@
 /**
- * @description Ricerca esercizi tramite dataset locale pre-generato (896 esercizi Wger EN).
- *              La ricerca avviene in-memory — nessuna chiamata API, risultati istantanei.
- *              Le immagini vengono caricate lazily da Wger quando si seleziona un esercizio.
+ * @description Ricerca esercizi tramite dataset locale (1723 esercizi, 873 con GIF).
+ *              Fonti: free-exercise-db + Wger EN.
+ *              Ricerca in-memory — istantanea, nessuna chiamata API.
+ *              Le GIF degli esercizi free-exercise-db sono già nel dataset.
  * @module esercizi
  */
 
@@ -11,10 +12,10 @@ import { ESERCIZI_DATASET } from './esercizi-dataset.js';
 // COSTANTI
 // ========================================
 
-/** @type {number} Numero massimo di risultati mostrati per ricerca */
-const MAX_RISULTATI = 12;
+/** @type {number} Numero massimo risultati per ricerca */
+const MAX_RISULTATI = 15;
 
-/** @type {string} URL base API Wger per le immagini */
+/** @type {string} URL base API Wger (usata solo per esercizi senza gifUrl nel dataset) */
 const WGER_IMG_BASE = 'https://wger.de/api/v2/exerciseimage';
 
 // ========================================
@@ -22,61 +23,67 @@ const WGER_IMG_BASE = 'https://wger.de/api/v2/exerciseimage';
 // ========================================
 
 /**
- * @description Cerca esercizi nel dataset locale tramite corrispondenza nel nome.
- *              La ricerca è case-insensitive e considera qualsiasi parola del termine.
- * @param {string} termine - Testo di ricerca (in inglese, es. "bench press", "curl")
- * @returns {Array<{id:number, nome:string, gruppoMuscolare:string, thumbnail:null}>}
+ * @description Cerca esercizi nel dataset locale.
+ *              Tutte le parole del termine devono essere presenti nel nome.
+ *              Priorità: nomi che iniziano con il termine > nomi che lo contengono.
+ * @param {string} termine - Testo di ricerca
+ * @returns {Array<{id:string|number, nome:string, gruppoMuscolare:string, gifUrl:string|null}>}
  */
 export function cercaEsercizi(termine) {
   if (!termine || termine.trim().length < 2) return [];
 
-  const parole = termine.trim().toLowerCase().split(/\s+/);
+  const parole  = termine.trim().toLowerCase().split(/\s+/);
+  const inizioT = termine.trim().toLowerCase();
 
   const risultati = ESERCIZI_DATASET.filter(es => {
     const nomeMin = es.nome.toLowerCase();
     return parole.every(p => nomeMin.includes(p));
   });
 
-  return risultati
-    .slice(0, MAX_RISULTATI)
-    .map(es => ({
-      id:              es.id,
-      nome:            es.nome,
-      gruppoMuscolare: es.categoria,
-      thumbnail:       null,
-    }));
+  // Ordina: prima quelli che iniziano con il termine
+  risultati.sort((a, b) => {
+    const aInizio = a.nome.toLowerCase().startsWith(inizioT) ? 0 : 1;
+    const bInizio = b.nome.toLowerCase().startsWith(inizioT) ? 0 : 1;
+    return aInizio - bInizio || a.nome.localeCompare(b.nome);
+  });
+
+  return risultati.slice(0, MAX_RISULTATI).map(es => ({
+    id:              es.id,
+    nome:            es.nome,
+    gruppoMuscolare: es.categoria,
+    gifUrl:          es.gifUrl || null,
+  }));
 }
 
 // ========================================
-// IMMAGINI WGER (lazy on selection)
+// IMMAGINI LAZY (solo per esercizi Wger senza GIF nel dataset)
 // ========================================
 
-/** @type {Map<number, string|null>} Cache immagini: wgerId → url */
+/** @type {Map<string|number, string|null>} Cache immagini Wger */
 const cacheImmagini = new Map();
 
 /**
- * @description Recupera l'URL della prima immagine disponibile per un esercizio Wger.
- *              Usa una cache in-memory per evitare chiamate duplicate.
- * @param {number} wgerId - ID base esercizio su Wger
- * @returns {Promise<string|null>} URL immagine oppure null
+ * @description Prova a recuperare un'immagine da Wger per gli esercizi
+ *              che non hanno una gifUrl nel dataset (esercizi Wger aggiunti).
+ *              Non chiamare per gli esercizi free-exercise-db (id inizia con "fe-").
+ * @param {string|number} idEs - ID esercizio
+ * @returns {Promise<string|null>} URL immagine o null
  */
-export async function ottieniImmagineEsercizio(wgerId) {
-  if (!wgerId) return null;
-  if (cacheImmagini.has(wgerId)) return cacheImmagini.get(wgerId);
+export async function ottieniImmagineEsercizio(idEs) {
+  if (!idEs || String(idEs).startsWith('fe-')) return null;
+  if (cacheImmagini.has(idEs)) return cacheImmagini.get(idEs);
 
   try {
-    const url  = `${WGER_IMG_BASE}/?exercise_base=${wgerId}&format=json`;
+    const url  = `${WGER_IMG_BASE}/?exercise_base=${idEs}&format=json`;
     const risp = await fetch(url);
-    if (!risp.ok) { cacheImmagini.set(wgerId, null); return null; }
-
-    const dati = await risp.json();
-    const imgs = dati.results || [];
-    const principale = imgs.find(i => i.is_main) || imgs[0];
-    const imgUrl = principale?.image || null;
-    cacheImmagini.set(wgerId, imgUrl);
+    if (!risp.ok) { cacheImmagini.set(idEs, null); return null; }
+    const dati    = await risp.json();
+    const imgs    = dati.results || [];
+    const imgUrl  = (imgs.find(i => i.is_main) || imgs[0])?.image || null;
+    cacheImmagini.set(idEs, imgUrl);
     return imgUrl;
   } catch {
-    cacheImmagini.set(wgerId, null);
+    cacheImmagini.set(idEs, null);
     return null;
   }
 }
@@ -88,10 +95,10 @@ export async function ottieniImmagineEsercizio(wgerId) {
 /**
  * @description Crea una versione debounced di una funzione.
  * @param {Function} fn      - Funzione da ritardare
- * @param {number}   ritardo - Millisecondi di attesa (default 250ms)
+ * @param {number}   ritardo - Millisecondi (default 200ms)
  * @returns {Function} Funzione debounced
  */
-export function creaDebounce(fn, ritardo = 250) {
+export function creaDebounce(fn, ritardo = 200) {
   let timer;
   return (...args) => {
     clearTimeout(timer);

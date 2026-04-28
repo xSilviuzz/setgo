@@ -601,9 +601,9 @@ function eseguiRicercaEsercizi(termine) {
   }
 
   contenitore.innerHTML = risultati.map(r => `
-    <button type="button" class="risultato-ricerca" data-id="${r.id}" data-nome="${r.nome}" data-muscolo="${r.gruppoMuscolare}">
-      ${r.thumbnail
-        ? `<img src="${r.thumbnail}" alt="" class="risultato-thumb" width="40" height="40" loading="lazy">`
+    <button type="button" class="risultato-ricerca" data-id="${r.id}" data-nome="${r.nome}" data-muscolo="${r.gruppoMuscolare}" data-gif="${r.gifUrl || ''}">
+      ${r.gifUrl
+        ? `<img src="${r.gifUrl}" alt="${r.nome}" class="risultato-thumb" width="40" height="40" loading="lazy">`
         : `<div class="risultato-thumb-placeholder"><i data-lucide="dumbbell" aria-hidden="true"></i></div>`}
       <div class="risultato-info">
         <span class="risultato-nome">${r.nome}</span>
@@ -613,13 +613,16 @@ function eseguiRicercaEsercizi(termine) {
     </button>`).join('');
 
   contenitore.querySelectorAll('.risultato-ricerca').forEach(btn => {
-    btn.addEventListener('click', () => aggiungiEsercizioAlForm({
-      id:              `wger-${btn.dataset.id}`,
-      nome:            btn.dataset.nome,
-      idWger:          parseInt(btn.dataset.id) || null,
-      gruppoMuscolare: btn.dataset.muscolo,
-      gifUrl:          null,
-    }, btn.dataset.id));
+    btn.addEventListener('click', () => {
+      const gifUrl = btn.dataset.gif || null;
+      aggiungiEsercizioAlForm({
+        id:              btn.dataset.id,
+        nome:            btn.dataset.nome,
+        idWger:          parseInt(btn.dataset.id) || null,
+        gruppoMuscolare: btn.dataset.muscolo,
+        gifUrl,
+      }, gifUrl ? null : btn.dataset.id);  // Carica da Wger solo se non c'è già la GIF
+    });
   });
   lucide.createIcons();
 }
